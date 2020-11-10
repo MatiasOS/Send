@@ -10,3 +10,7 @@ if (!danger.github.pr.assignees.length) {
 if(danger.github.requested_reviewers.length < 1) {
   warn("No te olvides de seleccionar al menos 1 reviewer a este PR!");
 }
+
+if (danger.github.pr.body.length < 10) {
+  fail("Agregar una descripción al PR!")
+}
