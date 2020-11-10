@@ -12,5 +12,5 @@ if(danger.github.requested_reviewers.length < 1) {
 }
 
 if (danger.github.pr.body.length < 10) {
-  fail("Agregar una descripción al PR!")ñ
+  fail("Agregar una descripción al PR!");
 }
