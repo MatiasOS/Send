@@ -1,4 +1,4 @@
-const {message, danger, warn} = require("danger");
+const {message, danger, warn, fail} = require("danger");
 
 const modifiedMD = danger.git.modified_files.join("- ");
 message("Changed Files in this PR: \n - " + modifiedMD);
@@ -12,5 +12,5 @@ if(danger.github.requested_reviewers.length < 1) {
 }
 
 if (danger.github.pr.body.length < 10) {
-  fail("Agregar una descripción al PR!")
+  fail("Agregar una descripción al PR!")ñ
 }
