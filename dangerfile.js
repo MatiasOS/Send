@@ -15,37 +15,41 @@ if (danger.github.pr.body.length < 10) {
   fail("Agregar una descripción al PR!");
 }
 
-const { data: fileList } = await danger.github.api.pulls.listFiles({
-  owner: danger.github.thisPR.owner,
-  repo: danger.github.thisPR.repo,
-  pull_number: danger.github.thisPR.number,
-});
-
-const modifiedFiles = fileList
-  .filter((f) => {
-    const filename = basename(f.filename)
-    return filename !== 'package-lock.json' && filename !== 'yarn.lock'
+const totalModifications = async () => {
+  const { data: fileList } = await danger.github.api.pulls.listFiles({
+    owner: danger.github.thisPR.owner,
+    repo: danger.github.thisPR.repo,
+    pull_number: danger.github.thisPR.number,
   });
 
-const additions = modifiedFiles.reduce((acc, file) => acc + file.additions, 0);
-const deletions = modifiedFiles.reduce((acc, file) => acc + file.deletions, 0);
+  const modifiedFiles = fileList
+    .filter((f) => {
+      const filename = basename(f.filename)
+      return filename !== 'package-lock.json' && filename !== 'yarn.lock'
+    });
 
-if(additions < 200 && deletions < 200) {
-  message(`Este PR tiene un tamño ideal! Solo ${additions + deletions} modificaciones!`);
-}
+  const additions = modifiedFiles.reduce((acc, file) => acc + file.additions, 0);
+  const deletions = modifiedFiles.reduce((acc, file) => acc + file.deletions, 0);
 
-if (additions > 200 && additions < 300) {
-  warn(`Límite de **additions** es 300. Actualmente estás en ${additions}`);
-}
+  if(additions < 200 && deletions < 200) {
+    message(`Este PR tiene un tamño ideal! Solo ${additions + deletions} modificaciones!`);
+  }
 
-if (additions > 300) {
-  fail(`Límite de **additions** es 300. Actualmente estás en ${additions}`);
-}
+  if (additions > 200 && additions < 300) {
+    warn(`Límite de **additions** es 300. Actualmente estás en ${additions}`);
+  }
 
-if (deletions > 200 && deletions < 300) {
-  warn(`Límite de **deletions** es 300. Actualmente estás en ${deletions}`);
-}
+  if (additions > 300) {
+    fail(`Límite de **additions** es 300. Actualmente estás en ${additions}`);
+  }
 
-if (deletions > 300) {
-  fail(`Límite de **deletions** es 300. Actualmente estás en ${deletions}`);
-}
+  if (deletions > 200 && deletions < 300) {
+    warn(`Límite de **deletions** es 300. Actualmente estás en ${deletions}`);
+  }
+
+  if (deletions > 300) {
+    fail(`Límite de **deletions** es 300. Actualmente estás en ${deletions}`);
+  }
+};
+
+totalModifications();
