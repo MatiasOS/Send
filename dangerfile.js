@@ -7,10 +7,6 @@ if (!danger.github.pr.assignees.length) {
   warn("No te olvides de asignar a alquien a este PR!");
 }
 
-if (!danger.github.pr.assignees.length) {
-  warn("No te olvides de asignar a alquien a este PR!");
-}
-
 if(danger.github.requested_reviewers.length < 1) {
   warn("No te olvides de seleccionar al menos 1 reviewer a este PR!");
 }
