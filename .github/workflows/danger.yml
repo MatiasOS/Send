@@ -1,0 +1,15 @@
+name: DangerJS
+on: [pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Install Danger
+        run: yarn add danger
+      - name: Run Danger
+        run: yarn danger ci
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_TOKEN }}
