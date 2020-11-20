@@ -13,7 +13,7 @@ const VALUE = "0.049"
 const run = async () => {
   console.log(await provider.getBlockNumber());
 
-  tx = {
+  const tx = {
     to: refillAddress,
     value: ethers.utils.parseEther(VALUE),
   }
@@ -31,7 +31,7 @@ const run = async () => {
         console.log('Skipping');
         continue;
       }; 
-      result = await wallet.sendTransaction(tx);
+      const result = await wallet.sendTransaction(tx);
       console.log(result.hash);
     } catch (e) {
       console.log(e)
